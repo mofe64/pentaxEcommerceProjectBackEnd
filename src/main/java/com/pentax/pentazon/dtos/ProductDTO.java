@@ -1,6 +1,7 @@
 package com.pentax.pentazon.dtos;
 
 import com.pentax.pentazon.models.Product;
+import com.pentax.pentazon.models.Review;
 import com.pentax.pentazon.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -33,6 +36,7 @@ public class ProductDTO {
     @NotNull
     @NotBlank(message = "Please provide a category Id")
     private String categoryId;
+    private List<Review> reviews = new ArrayList<>();
 
 
     public static Product unpackDTO(ProductDTO productDTO){
@@ -53,6 +57,7 @@ public class ProductDTO {
         productDTO.setImage(productDTO.getImage());
         productDTO.setName(product.getName());
         productDTO.setCategoryId(product.getCategoryId());
+        productDTO.setReviews(product.getReviews());
         return productDTO;
 
     }

@@ -19,5 +19,4 @@ public interface ProductService {
     public ProductDTO updateProduct(String productId ,ProductDTO updatedProductDetails) throws ProductException;
     public Product findProduct(String productId) throws ProductException;
     public List<ProductDTO> getAllProductsInACategory(String categoryId);
-
 }
