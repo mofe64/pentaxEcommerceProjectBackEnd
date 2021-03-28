@@ -30,6 +30,9 @@ public class ProductDTO {
     @NotNull
     @NotBlank(message = "Please provide a product Image")
     private String image;
+    @NotNull
+    @NotBlank(message = "Please provide a category Id")
+    private String categoryId;
 
 
     public static Product unpackDTO(ProductDTO productDTO){
@@ -38,6 +41,7 @@ public class ProductDTO {
        product.setPrice(new BigDecimal(productDTO.getPrice()));
        product.setImage(productDTO.getImage());
        product.setName(productDTO.getName());
+       product.setCategoryId(productDTO.getCategoryId());
         return product;
     }
 
@@ -48,6 +52,7 @@ public class ProductDTO {
         productDTO.setPrice(product.getPrice().toPlainString());
         productDTO.setImage(productDTO.getImage());
         productDTO.setName(product.getName());
+        productDTO.setCategoryId(product.getCategoryId());
         return productDTO;
 
     }

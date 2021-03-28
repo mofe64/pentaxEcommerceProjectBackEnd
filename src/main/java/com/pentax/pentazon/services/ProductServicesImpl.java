@@ -92,16 +92,15 @@ public class ProductServicesImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getAllProductsInACategory(String categoryId) throws ProductCategoryException {
-        ProductCategory productCategory = productCategoryService.getProductCategoryById(categoryId);
+    public List<ProductDTO> getAllProductsInACategory(String categoryId) {
         List<ProductDTO> products = new ArrayList<>();
-        for (Product product: getProductInCategory(productCategory)){
+        for (Product product: getProductInCategory(categoryId)){
             products.add(ProductDTO.packDTO(product));
         }
         return products;
     }
-    private List<Product> getProductInCategory(ProductCategory productCategory){
-       return productRepository.findProductsByCategory(productCategory);
+    private List<Product> getProductInCategory(String productCategoryId){
+       return productRepository.findProductsByCategoryId(productCategoryId);
     }
 
     private Product saveProduct(Product product) {

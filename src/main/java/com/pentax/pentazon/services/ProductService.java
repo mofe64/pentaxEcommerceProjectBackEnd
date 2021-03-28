@@ -18,6 +18,6 @@ public interface ProductService {
     public List<ProductDTO> getAllProducts();
     public ProductDTO updateProduct(String productId ,ProductDTO updatedProductDetails) throws ProductException;
     public Product findProduct(String productId) throws ProductException;
-    public List<ProductDTO> getAllProductsInACategory(String categoryId) throws ProductCategoryException;
+    public List<ProductDTO> getAllProductsInACategory(String categoryId);
 
 }

@@ -63,21 +63,17 @@ public class ProductController {
         }
 
     }
+
     @GetMapping("/all")
-    public ResponseEntity<?> getAllProducts(){
+    public ResponseEntity<?> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/all/{categoryId}")
     public ResponseEntity<?> getAllProductsInACategory(@PathVariable String categoryId) {
-        try {
-            List<ProductDTO> products = productService.getAllProductsInACategory(categoryId);
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        } catch (ProductCategoryException e){
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-
+        List<ProductDTO> products = productService.getAllProductsInACategory(categoryId);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("{productId}")

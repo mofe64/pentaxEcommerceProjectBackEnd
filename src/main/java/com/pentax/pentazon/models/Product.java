@@ -21,8 +21,7 @@ public class Product {
     private BigDecimal price;
     private String image;
 //    private List<reviews>  review Todo
-    @DBRef
-    private ProductCategory productCategory;
+    private String categoryId;
 
 
 
