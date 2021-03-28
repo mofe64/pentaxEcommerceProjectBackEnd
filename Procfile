@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=default -Dserver.port=$PORT -jar target/tutorsapi-0.0.1-SNAPSHOT.jar
+web: java -Dspring.profiles.active=default -Dserver.port=$PORT -jar target/pentazon-0.0.1-SNAPSHOT.jar
