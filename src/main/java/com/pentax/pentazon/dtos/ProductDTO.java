@@ -2,12 +2,10 @@ package com.pentax.pentazon.dtos;
 
 import com.pentax.pentazon.models.Product;
 import com.pentax.pentazon.models.Review;
-import com.pentax.pentazon.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -54,7 +52,7 @@ public class ProductDTO {
         productDTO.setId(product.getId());
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice().toPlainString());
-        productDTO.setImage(productDTO.getImage());
+        productDTO.setImage(product.getImage());
         productDTO.setName(product.getName());
         productDTO.setCategoryId(product.getCategoryId());
         productDTO.setReviews(product.getReviews());
