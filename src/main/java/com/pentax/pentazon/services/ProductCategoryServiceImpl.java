@@ -67,6 +67,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return list;
     }
 
+    @Override
+    public ProductCategory getProductCategoryById(String id) throws ProductCategoryException {
+        return findCategoryById(id);
+    }
+
     private List<ProductCategory> getAllProductCategories() {
         return productCategoryRepository.findAll();
     }

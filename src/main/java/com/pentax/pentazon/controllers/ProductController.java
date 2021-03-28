@@ -3,6 +3,7 @@ package com.pentax.pentazon.controllers;
 
 import com.pentax.pentazon.dtos.ApiResponse;
 import com.pentax.pentazon.dtos.ProductDTO;
+import com.pentax.pentazon.exceptions.ProductCategoryException;
 import com.pentax.pentazon.exceptions.ProductException;
 import com.pentax.pentazon.models.Product;
 import com.pentax.pentazon.services.ProductService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("DuplicatedCode")
@@ -61,6 +63,22 @@ public class ProductController {
         }
 
     }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllProducts(){
+        List<ProductDTO> products = productService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/{categoryId}")
+    public ResponseEntity<?> getAllProductsInACategory(@PathVariable String categoryId) {
+        try {
+            List<ProductDTO> products = productService.getAllProductsInACategory(categoryId);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (ProductCategoryException e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
     @GetMapping("{productId}")
     public ResponseEntity<?> findProductById(@RequestBody @PathVariable String productId) {
@@ -72,8 +90,8 @@ public class ProductController {
             return new ResponseEntity<>(new ApiResponse(false, productException.getMessage()),
                     HttpStatus.BAD_REQUEST);
         }
-
     }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

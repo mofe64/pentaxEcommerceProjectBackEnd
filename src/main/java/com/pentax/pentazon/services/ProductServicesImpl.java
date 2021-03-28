@@ -1,8 +1,10 @@
 package com.pentax.pentazon.services;
 
 import com.pentax.pentazon.dtos.ProductDTO;
+import com.pentax.pentazon.exceptions.ProductCategoryException;
 import com.pentax.pentazon.exceptions.ProductException;
 import com.pentax.pentazon.models.Product;
+import com.pentax.pentazon.models.ProductCategory;
 import com.pentax.pentazon.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class ProductServicesImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    ProductCategoryService productCategoryService;
 
     @Override
     public void addProduct(ProductDTO productDTO) {
@@ -54,14 +58,15 @@ public class ProductServicesImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getAllProducts(){
+    public List<ProductDTO> getAllProducts() {
         List<ProductDTO> productDTOS = new ArrayList<>();
-        for (Product product: getAllProductsFromDb()){
+        for (Product product : getAllProductsFromDb()) {
             productDTOS.add(ProductDTO.packDTO(product));
         }
-       return productDTOS;
+        return productDTOS;
     }
-    private List<Product> getAllProductsFromDb(){
+
+    private List<Product> getAllProductsFromDb() {
         return productRepository.findAll();
     }
 
@@ -71,7 +76,7 @@ public class ProductServicesImpl implements ProductService {
         if (!productToUpdate.getDescription().equals(updatedProductDetails.getDescription())) {
             productToUpdate.setDescription(updatedProductDetails.getDescription());
         }
-        if (!productToUpdate.getPrice().equals(updatedProductDetails.getPrice())) {
+        if (!productToUpdate.getPrice().toString().equals(updatedProductDetails.getPrice())) {
             productToUpdate.setPrice(new BigDecimal(updatedProductDetails.getPrice()));
         }
         if (!productToUpdate.getImage().equals(updatedProductDetails.getImage())) {
@@ -84,6 +89,19 @@ public class ProductServicesImpl implements ProductService {
     @Override
     public Product findProduct(String productId) throws ProductException {
         return findAProductById(productId);
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductsInACategory(String categoryId) throws ProductCategoryException {
+        ProductCategory productCategory = productCategoryService.getProductCategoryById(categoryId);
+        List<ProductDTO> products = new ArrayList<>();
+        for (Product product: getProductInCategory(productCategory)){
+            products.add(ProductDTO.packDTO(product));
+        }
+        return products;
+    }
+    private List<Product> getProductInCategory(ProductCategory productCategory){
+       return productRepository.findProductsByCategory(productCategory);
     }
 
     private Product saveProduct(Product product) {
