@@ -7,12 +7,13 @@ import com.pentax.pentazon.models.Cart;
 import com.pentax.pentazon.models.Item;
 import com.pentax.pentazon.models.Product;
 import com.pentax.pentazon.repository.CartRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class CartServiceImpl implements CartService {
     @Autowired
