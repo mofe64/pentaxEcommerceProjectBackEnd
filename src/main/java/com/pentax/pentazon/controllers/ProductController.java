@@ -7,6 +7,7 @@ import com.pentax.pentazon.exceptions.ProductCategoryException;
 import com.pentax.pentazon.exceptions.ProductException;
 import com.pentax.pentazon.models.Product;
 import com.pentax.pentazon.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.Map;
 @SuppressWarnings("DuplicatedCode")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@Slf4j
 @RequestMapping("/api/v1/product")
 public class ProductController {
 
@@ -31,7 +33,8 @@ public class ProductController {
 
     @PostMapping("/new")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
-        System.out.println(productDTO);
+//        System.out.println(productDTO);
+        log.info("Product DTO : {}", productDTO);
         productService.addProduct(productDTO);
         return new ResponseEntity<>(new ApiResponse(true, "Product created successfully"),
                 HttpStatus.CREATED);
@@ -39,7 +42,8 @@ public class ProductController {
 
     @DeleteMapping("{productId}")
     public ResponseEntity<?> removeProduct(@Valid @PathVariable String productId) {
-        System.out.println(productId);
+//        System.out.println(productId);
+        log.info("productId : {}", productId);
         try {
             productService.removeProduct(productId);
             return new ResponseEntity<>(new ApiResponse(true, "product removed successfully"),
@@ -53,7 +57,8 @@ public class ProductController {
 
     @PatchMapping("{productId}")
     public ResponseEntity<?> updateProduct(@RequestBody ProductDTO updatedProductDetails, @PathVariable String productId) {
-        System.out.println(updatedProductDetails);
+//        System.out.println(updatedProductDetails);
+        log.info("Product DTO : {} \n productID : {}", updatedProductDetails, productId);
         try {
             ProductDTO updatedProduct = productService.updateProduct(productId, updatedProductDetails);
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
@@ -78,7 +83,8 @@ public class ProductController {
 
     @GetMapping("{productId}")
     public ResponseEntity<?> findProductById(@RequestBody @PathVariable String productId) {
-        System.out.println(productId);
+//        System.out.println(productId);
+        log.info("productId : {}", productId);
         try {
             ProductDTO productDTO = productService.findProductById(productId);
             return new ResponseEntity<>(productDTO, HttpStatus.OK);
