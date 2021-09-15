@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service(value = "userService")
 public interface UserService {
     UserDTO registerBuyer(UserDTO buyerDetails) throws UserException;
 
